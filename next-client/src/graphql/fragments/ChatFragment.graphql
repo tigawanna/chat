@@ -1,0 +1,4 @@
+fragment RegularChat on Chat{
+    id
+    message,
+}
