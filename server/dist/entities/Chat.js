@@ -25,6 +25,14 @@ __decorate([
     (0, typegoose_1.prop)({}),
     __metadata("design:type", String)
 ], Chat.prototype, "message", void 0);
+__decorate([
+    (0, type_graphql_2.Field)(),
+    __metadata("design:type", Date)
+], Chat.prototype, "createdAt", void 0);
+__decorate([
+    (0, type_graphql_2.Field)(),
+    __metadata("design:type", Date)
+], Chat.prototype, "updatedAt", void 0);
 Chat = __decorate([
     (0, type_graphql_1.ObjectType)()
 ], Chat);

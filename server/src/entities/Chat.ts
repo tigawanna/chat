@@ -13,6 +13,12 @@ export class Chat {
   @Property({ })
   message: string;
 
+  @Field()
+  createdAt: Date 
+
+  @Field()
+  updatedAt: Date 
+
   // @Field(()=>String,{nullable:false})
   // @Property()
   // user: string;

@@ -10,7 +10,7 @@ interface ChatProps{
 }
 
 
-const Home: NextPage = () => {
+const Home: NextPage<ChatProps> = () => {
 const { loading, error, data } = useChatsQuery()
   console.log(data,error)
   console.log(error?.message)

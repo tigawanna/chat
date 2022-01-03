@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import styles from "../styles/ChatForm.module.css";
-import { useCreateChatMutation } from './../src/generated/graphql';
+import {
+   useCreateChatMutation,
+   ChatsDocument, ChatsQuery } from './../src/generated/graphql';
 
 interface ChatFormProps {
 
@@ -23,7 +25,27 @@ export const ChatForm: React.FC<ChatFormProps> = ({}) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(input);
-    textBack({variables:{input}})
+    textBack(
+      {
+        variables:{input},
+        update: (store, { data }) => {
+          // you could wrap this in a try/catch
+          const chatData = store.readQuery<ChatsQuery>({
+            query: ChatsDocument
+          });
+
+          store.writeQuery<ChatsQuery>({
+            query: ChatsDocument,
+            data: {
+              chats: [...chatData!.chats, data!.createChat]
+            }
+          });
+        }
+    
+    }
+      
+
+      )
     .then(e=>console.log("add chat response========= ",e))
   };
   return (

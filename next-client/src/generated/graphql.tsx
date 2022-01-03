@@ -13,12 +13,16 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
 };
 
 export type Chat = {
   __typename?: 'Chat';
+  createdAt: Scalars['DateTime'];
   id: Scalars['String'];
   message: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type Mutation = {
@@ -60,7 +64,7 @@ export type UserInput = {
   name: Scalars['String'];
 };
 
-export type RegularChatFragment = { __typename?: 'Chat', id: string, message: string };
+export type RegularChatFragment = { __typename?: 'Chat', id: string, message: string, createdAt: any, updatedAt: any };
 
 export type RegularUserFragment = { __typename?: 'User', id: string, name: string };
 
@@ -69,12 +73,12 @@ export type CreateChatMutationVariables = Exact<{
 }>;
 
 
-export type CreateChatMutation = { __typename?: 'Mutation', createChat: { __typename?: 'Chat', id: string, message: string } };
+export type CreateChatMutation = { __typename?: 'Mutation', createChat: { __typename?: 'Chat', id: string, message: string, createdAt: any, updatedAt: any } };
 
 export type ChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ChatsQuery = { __typename?: 'Query', chats: Array<{ __typename?: 'Chat', id: string, message: string }> };
+export type ChatsQuery = { __typename?: 'Query', chats: Array<{ __typename?: 'Chat', id: string, message: string, createdAt: any, updatedAt: any }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -85,6 +89,8 @@ export const RegularChatFragmentDoc = gql`
     fragment RegularChat on Chat {
   id
   message
+  createdAt
+  updatedAt
 }
     `;
 export const RegularUserFragmentDoc = gql`
