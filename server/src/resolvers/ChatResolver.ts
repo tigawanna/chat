@@ -49,8 +49,8 @@ export class  ChatResolver {
 
 //subscribe to createUser mutation 
   @Subscription({ topics: NEWCHAT })
-  userAdded(@Root() { id,message}): Chat {
-    return { id, message};
+  newChat(@Root() { id,message,createdAt,updatedAt}): Chat {
+    return { id, message,createdAt,updatedAt};
   }
 
   

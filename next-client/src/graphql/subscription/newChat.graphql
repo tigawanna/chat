@@ -1,0 +1,6 @@
+subscription NewChat {
+  newChat {
+    id
+    message
+  }
+}

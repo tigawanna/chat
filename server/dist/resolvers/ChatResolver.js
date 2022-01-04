@@ -32,8 +32,8 @@ let ChatResolver = class ChatResolver {
         console.log(chat);
         return chat;
     }
-    userAdded({ id, message }) {
-        return { id, message };
+    newChat({ id, message, createdAt, updatedAt }) {
+        return { id, message, createdAt, updatedAt };
     }
 };
 __decorate([
@@ -56,7 +56,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Chat_1.Chat)
-], ChatResolver.prototype, "userAdded", null);
+], ChatResolver.prototype, "newChat", null);
 ChatResolver = __decorate([
     (0, type_graphql_1.Resolver)(() => Chat_1.Chat)
 ], ChatResolver);

@@ -1,9 +1,11 @@
 import type { NextPage } from 'next'
 import { ChatForm } from '../components/ChatForm';
 import { RegularChatFragment,
-      useChatsQuery } from '../src/generated/graphql';
+      useChatsQuery, 
+      useNewChatSubscription} from '../src/generated/graphql';
 import styles from '../styles/Home.module.css'
 import Card from './../components/Card';
+
 
 interface ChatProps{
   m:RegularChatFragment
@@ -12,7 +14,11 @@ interface ChatProps{
 
 const Home: NextPage<ChatProps> = () => {
 const { loading, error, data } = useChatsQuery()
-  console.log(data,error)
+
+const result=useNewChatSubscription()
+
+
+  console.log("new ping========    ",result)
   console.log(error?.message)
   return (
     <div className={styles.container}>
