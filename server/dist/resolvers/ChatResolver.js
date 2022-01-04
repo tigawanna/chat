@@ -32,6 +32,14 @@ let ChatResolver = class ChatResolver {
         console.log(chat);
         return chat;
     }
+    async deleteChat(id) {
+        await Chat_1.ChatModel.findByIdAndDelete({ _id: id })
+            .catch(e => {
+            console.log("is delete error ======", e);
+            return false;
+        });
+        return true;
+    }
     newChat({ id, message, createdAt, updatedAt }) {
         return { id, message, createdAt, updatedAt };
     }
@@ -50,6 +58,13 @@ __decorate([
     __metadata("design:paramtypes", [String, Function]),
     __metadata("design:returntype", Promise)
 ], ChatResolver.prototype, "createChat", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)('id', () => String)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChatResolver.prototype, "deleteChat", null);
 __decorate([
     (0, type_graphql_1.Subscription)({ topics: NEWCHAT }),
     __param(0, (0, type_graphql_1.Root)()),

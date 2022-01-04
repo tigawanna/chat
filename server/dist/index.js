@@ -19,6 +19,7 @@ const cors_1 = __importDefault(require("cors"));
     const PORT = 4000;
     const app = (0, express_1.default)();
     const allowedOrigins = ['http://localhost:3000',
+        'http://localhost:3001',
         'https://studio.apollographql.com'];
     const corsOptions = {
         credentials: true,

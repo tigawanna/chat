@@ -1,0 +1,3 @@
+mutation DeleteChat($id: String!) {
+  deleteChat(id: $id)
+}

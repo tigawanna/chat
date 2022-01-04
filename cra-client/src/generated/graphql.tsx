@@ -29,6 +29,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createChat: Chat;
   createUser: User;
+  deleteChat: Scalars['Boolean'];
 };
 
 
@@ -39,6 +40,11 @@ export type MutationCreateChatArgs = {
 
 export type MutationCreateUserArgs = {
   input: UserInput;
+};
+
+
+export type MutationDeleteChatArgs = {
+  id: Scalars['String'];
 };
 
 export type Query = {
@@ -75,6 +81,13 @@ export type CreateChatMutationVariables = Exact<{
 
 
 export type CreateChatMutation = { __typename?: 'Mutation', createChat: { __typename?: 'Chat', id: string, message: string, createdAt: any, updatedAt: any } };
+
+export type DeleteChatMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteChatMutation = { __typename?: 'Mutation', deleteChat: boolean };
 
 export type ChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -138,6 +151,37 @@ export function useCreateChatMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateChatMutationHookResult = ReturnType<typeof useCreateChatMutation>;
 export type CreateChatMutationResult = Apollo.MutationResult<CreateChatMutation>;
 export type CreateChatMutationOptions = Apollo.BaseMutationOptions<CreateChatMutation, CreateChatMutationVariables>;
+export const DeleteChatDocument = gql`
+    mutation DeleteChat($id: String!) {
+  deleteChat(id: $id)
+}
+    `;
+export type DeleteChatMutationFn = Apollo.MutationFunction<DeleteChatMutation, DeleteChatMutationVariables>;
+
+/**
+ * __useDeleteChatMutation__
+ *
+ * To run a mutation, you first call `useDeleteChatMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteChatMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteChatMutation, { data, loading, error }] = useDeleteChatMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteChatMutation(baseOptions?: Apollo.MutationHookOptions<DeleteChatMutation, DeleteChatMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteChatMutation, DeleteChatMutationVariables>(DeleteChatDocument, options);
+      }
+export type DeleteChatMutationHookResult = ReturnType<typeof useDeleteChatMutation>;
+export type DeleteChatMutationResult = Apollo.MutationResult<DeleteChatMutation>;
+export type DeleteChatMutationOptions = Apollo.BaseMutationOptions<DeleteChatMutation, DeleteChatMutationVariables>;
 export const ChatsDocument = gql`
     query Chats {
   chats {

@@ -8,9 +8,11 @@ import {
   Publisher,
   Root,
   Subscription,
+  Int,
 } from "type-graphql";
 
 import { HydratedDocument } from "mongoose";
+import { ObjectId } from 'mongodb';
 
 const NEWCHAT = "NEW_CHAT_ADDED";
 
@@ -46,6 +48,21 @@ export class  ChatResolver {
     //@ts-ignore
     return chat;
   }
+
+  //delete a post
+@Mutation(()=>Boolean)
+async deleteChat(
+@Arg('id',()=>String) id,
+) :Promise<boolean>{
+
+await ChatModel.findByIdAndDelete({_id:id})
+.catch(e=>{
+  console.log("is delete error ======",e)
+  return false
+})
+return true;
+
+}
 
 //subscribe to createUser mutation 
   @Subscription({ topics: NEWCHAT })
