@@ -38,7 +38,10 @@
    .cardmiddlestart{
     /* outline: 2px solid black; */
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 10%;
+    height: 50px;
     margin: 5px;
     
    }

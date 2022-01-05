@@ -61,6 +61,24 @@ return true;
 
 }
 
+  //delete a post
+  @Mutation(()=>Chat)
+  async updateChat(
+  @Arg('id',()=>String) id,
+  @Arg("input") input: String,
+  ) :Promise<Chat>{
+  const updatedChat= await ChatModel.findByIdAndUpdate(
+    {_id:id},
+    { message:input}, 
+    {new: true}
+  )
+  .catch(e=>{
+    console.log("is delete error ======",e)
+
+  })
+ return updatedChat as Chat
+  }
+
 //subscribe to createUser mutation 
   @Subscription({ topics: NEWCHAT })
   newChat(@Root() { id,message,createdAt,updatedAt}): Chat {

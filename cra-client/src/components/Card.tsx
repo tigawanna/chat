@@ -4,7 +4,7 @@ import {
   RegularChatFragment,
   useDeleteChatMutation,
 } from "../generated/graphql";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash,FaEdit } from "react-icons/fa";
 
 interface ChatProps {
   m: RegularChatFragment;
@@ -43,6 +43,7 @@ const Card: React.FC<ChatProps> = ({ m }) => {
                 .catch((e) => console.log("delete chat error========= ", e));
             }}
           />
+          <FaEdit/>
         </div>
 
         <div className="cardmiddlecenter">
