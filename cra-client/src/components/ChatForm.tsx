@@ -1,16 +1,18 @@
 import './card-form.css'
 import React, { useState } from "react";
-
 import {
    useCreateChatMutation,
    ChatsDocument, ChatsQuery } from '../generated/graphql';
 
-interface ChatFormProps {
-}
- const ChatForm: React.FC<ChatFormProps> = () => {
+   interface ChatFormProps {
+    setSending:React.Dispatch<React.SetStateAction<boolean>>
+  }
+
+ const ChatForm: React.FC<ChatFormProps> = ({setSending}) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [chatError, setError] = useState();
+
   const [input, setInput] = useState("");
+  
 
   const [textBack]=useCreateChatMutation()
 
@@ -38,32 +40,25 @@ interface ChatFormProps {
             }
           });
         }
-    
-    }
-      
+      })
 
-      )
-    .then(e=>console.log("add chat response========= ",e))
   };
   return (
     <div className="container">
       <form className="theform">
        <div className="inputgroup">
          <input
-            className={chatError ? "theinputerror" : "theinput"}
+            className= "theinput"
             id="usernameOrEmail"
             placeholder="username or email"
             onChange={handleChange}
             value={input}
           />
-       <button className="formbutton" onClick={handleSubmit}>
+         <button className="formbutton" onClick={handleSubmit}>
           send
         </button>
         </div>
-        <span className="inputerror">error:{chatError}</span>
-
-     
-      </form>
+       </form>
     </div>
   );
 };

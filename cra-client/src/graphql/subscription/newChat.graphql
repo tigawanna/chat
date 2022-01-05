@@ -1,6 +1,5 @@
 subscription NewChat {
   newChat {
-    id
-    message
+   ...RegularChat
   }
 }

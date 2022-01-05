@@ -102,7 +102,9 @@ export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'Us
 export type NewChatSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NewChatSubscription = { __typename?: 'Subscription', newChat: { __typename?: 'Chat', id: string, message: string } };
+export type NewChatSubscription = {
+   __typename?: 'Subscription', newChat: 
+   { __typename?: 'Chat', id: string, message: string, createdAt: any, updatedAt: any } };
 
 export const RegularChatFragmentDoc = gql`
     fragment RegularChat on Chat {
@@ -253,11 +255,10 @@ export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariable
 export const NewChatDocument = gql`
     subscription NewChat {
   newChat {
-    id
-    message
+    ...RegularChat
   }
 }
-    `;
+    ${RegularChatFragmentDoc}`;
 
 /**
  * __useNewChatSubscription__

@@ -8,12 +8,9 @@ import {
   Publisher,
   Root,
   Subscription,
-  Int,
 } from "type-graphql";
 
 import { HydratedDocument } from "mongoose";
-import { ObjectId } from 'mongodb';
-
 const NEWCHAT = "NEW_CHAT_ADDED";
 
 @Resolver(() => Chat)

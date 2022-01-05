@@ -1,39 +1,49 @@
-import { useEffect } from 'react';
+
 import './App.css';
 import Card from './components/Card';
 import ChatForm from './components/ChatForm';
-import { useChatsQuery, useNewChatSubscription} from './generated/graphql';
-
-
-
+import { NewChatDocument, useChatsQuery} from './generated/graphql';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 
 function App() {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const resul = useChatsQuery()
-const result=useNewChatSubscription()
+const {subscribeToMore ,...result} = useChatsQuery()
 
-console.log("subsciption result======== ",result.data)
+const[sending,setSending]=useState(false)
 
-// const more=subscribeToMore({
-//   document:NewChatDocument,
-//   updateQuery: (prev, { subscriptionData  }) => {
-//     if (!subscriptionData.data) return prev;
-//     const newFeedItem = subscriptionData ;
-//     //@ts-ignore
-//     console.log("new feed data ===== ",newFeedItem.data.newChat )
-//     console.log("prev is ===== ",prev)
-//   return Object.assign({}, prev, {
-//   data:{
-//     chats:[newFeedItem,...prev.chats]
-//       }
-//     });
-//   }
-// })
+const subscribeToNewComments=() =>{
+  subscribeToMore({
+    document: NewChatDocument,
+     updateQuery: (prev, { subscriptionData  }) => {
+      if (!subscriptionData.data||!sending){
+        // console.log("no subscription data ===== ",prev)
+        return prev
+      }
+      // const newFeedItem = subscriptionData.data.commentAdded;
+      //@ts-ignore
+      const newFeedItem= subscriptionData.data.newChat;
+      console.log("new feed data ===== ",newFeedItem)
+      console.log("prev datad ===== ",prev)
+      const newObj =Object.assign({}, prev, {
+  
+      chats: [newFeedItem,...prev.chats]
+      
+      });
+    //  console.log("new object after merging ===== ",newObj)
+      return newObj
 
-// useEffect(() => {
-// more()
-// }, [])
+    }
+
+    
+  })
+}
+
+useEffect(() => {
+subscribeToNewComments()
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
 
 
  return (
@@ -41,7 +51,7 @@ console.log("subsciption result======== ",result.data)
      <h1>Home</h1>
      <div className="main">
      {
-        result&&resul.data?.chats.map((item)=>{
+        result&&result.data?.chats.map((item)=>{
         //  console.log(item)
          return(
            <Card key={item.id} m={item}/>
@@ -50,7 +60,7 @@ console.log("subsciption result======== ",result.data)
      }
      </div>
         <div className="footer">
-         <ChatForm/>
+        <ChatForm setSending={setSending}/>
         </div>
     </div>
   );
