@@ -61,7 +61,7 @@ return true;
 
 }
 
-  //delete a post
+  //update a post
   @Mutation(()=>Chat)
   async updateChat(
   @Arg('id',()=>String) id,
