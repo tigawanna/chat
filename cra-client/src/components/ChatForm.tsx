@@ -49,8 +49,8 @@ import {
        <div className="inputgroup">
          <input
             className= "theinput"
-            id="usernameOrEmail"
-            placeholder="username or email"
+            id="chat"
+            placeholder="type.."
             onChange={handleChange}
             value={input}
           />

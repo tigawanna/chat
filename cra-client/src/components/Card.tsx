@@ -4,7 +4,9 @@ import {
   RegularChatFragment,
   useDeleteChatMutation,
 } from "../generated/graphql";
-import { FaTrash,FaEdit } from "react-icons/fa";
+import { FaTrash,FaEdit,FaCheck } from "react-icons/fa";
+import { useState } from 'react';
+import { useUpdateChatMutation } from './../generated/graphql';
 
 interface ChatProps {
   m: RegularChatFragment;
@@ -12,14 +14,40 @@ interface ChatProps {
 
 const Card: React.FC<ChatProps> = ({ m }) => {
   const [deleteChat] = useDeleteChatMutation();
+  const [editing, setEditing] = useState(false)  
+  const [input, setInput] = useState(m.message);
+  const [updateChat]=useUpdateChatMutation()
 
+const handleChange:React.ChangeEventHandler<HTMLInputElement> = (evt) => {
+  const value = evt.target.value;
+  setInput(value);
+  };
+
+const startEditing=()=>{
+setEditing(true)
+}
+const stopEditing=()=>{
+setEditing(false)
+console.log(input)
+updateChat({variables:{id:m.id,input}})
+.then((e) => console.log("update chat response========= ", e))
+.catch((e) => console.log("update chat error========= ", e));
+
+}
   return (
     <div key={m.id} className="card">
       <div className="cardheader">
         <div className="cardheaderid"></div>
 
         <div className="cardheaderid">
-          {dayjs(m.createdAt).format("D MMM , YYYY h:mm A")}
+        {editing?
+          <input
+            className= "theinput"
+            id="chat"
+            placeholder="type.."
+            onChange={handleChange}
+            value={input}
+          />:<p>{m.message}</p>}
         </div>
         <div className="cardheaderuser">by: {} </div>
       </div>
@@ -43,14 +71,20 @@ const Card: React.FC<ChatProps> = ({ m }) => {
                 .catch((e) => console.log("delete chat error========= ", e));
             }}
           />
-          <FaEdit/>
+       
         </div>
 
         <div className="cardmiddlecenter">
-          <p> {m.message}</p>
+          <div>{dayjs(m.createdAt).format("D MMM , YYYY h:mm A")}</div>
+          <div>{dayjs(m.updatedAt).format("D MMM , YYYY h:mm A")}</div>
         </div>
 
-        <div className="cardmiddleend"></div>
+        <div className="cardmiddleend">
+          {editing?
+          <FaCheck onClick={()=>stopEditing()}/>
+          :
+          <FaEdit onClick={()=>startEditing()}/>
+          }</div>
       </div>
     </div>
   );

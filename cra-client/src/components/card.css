@@ -28,6 +28,8 @@
   }
   .cardheaderid{
     font-weight: 800;
+    display: flex;
+    flex-direction: column;
     /* outline: 2px solid black; */
   }
   .cardmiddle{
@@ -45,7 +47,9 @@
     margin: 5px;
     
    }
-
+   .cardmiddlecenter{
+     font-size: 12px
+   }
    .cardmiddlemiddle{
     /* outline: 2px solid black; */
     display: flex;
@@ -56,7 +60,7 @@
    .cardmiddleend{
     display: flex;
     flex-direction: column;
-    width: 5%;
+    width: 10px;
     margin: 5px;
    }
 
@@ -66,3 +70,7 @@
     font-weight: 500;
     
   }
+.theinput{
+  padding: 10px;
+  margin: 5px;
+}
