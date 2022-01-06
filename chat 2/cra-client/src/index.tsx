@@ -32,14 +32,9 @@ const splitLink = split(
   httpLink,
 
 )
-const cache=new InMemoryCache({
-  typePolicies:{
-    
-  }
-})
 
 const client = new ApolloClient({
-  cache,
+  cache: new InMemoryCache(),
   link:splitLink,
 });
 

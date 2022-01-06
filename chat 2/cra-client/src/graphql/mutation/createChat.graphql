@@ -1,0 +1,5 @@
+mutation CreateChat($input: String!) {
+  createChat(input: $input) {
+   ...RegularChat
+  }
+}

@@ -18,10 +18,19 @@ export class  ChatResolver {
 
   //query all users
   @Query(() => [Chat])
+  //@ts-ignore
   async chats(): Promise<Chat[]> {
-    const chats = await ChatModel.find({});
-    // console.log("user returned========",users)
-    return chats;
+    const options = {
+      page: 1,
+      limit: 2,
+      collation: {
+        locale: 'en',
+      },
+    };
+//@ts-ignore
+const chats=await ChatModel.paginate({}, options)
+console.log("holt output ======",chats)    
+return chats.docs
   }
 
   
@@ -41,7 +50,7 @@ export class  ChatResolver {
     // .catch(e=>
     //  console.log("error response====== ", e)
     // )
-    console.log(chat)
+
     //@ts-ignore
     return chat;
   }
@@ -81,8 +90,9 @@ return true;
 
 //subscribe to createUser mutation 
   @Subscription({ topics: NEWCHAT })
-  newChat(@Root() { id,message,createdAt,updatedAt}): Chat {
-    return { id, message,createdAt,updatedAt};
+  newChat(@Root() { _id,message,createdAt,updatedAt}): Chat {
+    console.log("subscription firing ===== ",{ _id, message,createdAt,updatedAt})
+    return { _id, message,createdAt,updatedAt};
   }
 
   

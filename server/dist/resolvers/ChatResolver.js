@@ -18,8 +18,16 @@ const type_graphql_1 = require("type-graphql");
 const NEWCHAT = "NEW_CHAT_ADDED";
 let ChatResolver = class ChatResolver {
     async chats() {
-        const chats = await Chat_1.ChatModel.find({});
-        return chats;
+        const options = {
+            page: 1,
+            limit: 2,
+            collation: {
+                locale: 'en',
+            },
+        };
+        const chats = await Chat_1.ChatModel.paginate({}, options);
+        console.log("holt output ======", chats);
+        return chats.docs;
     }
     async createChat(input, publish) {
         const chat = new Chat_1.ChatModel({
@@ -29,7 +37,6 @@ let ChatResolver = class ChatResolver {
             console.log("user response====== ", e);
             await publish(e);
         });
-        console.log(chat);
         return chat;
     }
     async deleteChat(id) {
@@ -47,8 +54,9 @@ let ChatResolver = class ChatResolver {
         });
         return updatedChat;
     }
-    newChat({ id, message, createdAt, updatedAt }) {
-        return { id, message, createdAt, updatedAt };
+    newChat({ _id, message, createdAt, updatedAt }) {
+        console.log("subscription firing ===== ", { _id, message, createdAt, updatedAt });
+        return { _id, message, createdAt, updatedAt };
     }
 };
 __decorate([

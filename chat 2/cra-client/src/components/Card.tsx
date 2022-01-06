@@ -27,13 +27,10 @@ const startEditing=()=>{
 setEditing(true)
 }
 const stopEditing=()=>{
-
+setEditing(false)
 console.log(input)
 updateChat({variables:{id:m._id,input}})
-.then((e) => {
-  setEditing(false)
-  console.log("update chat response========= ", e)
-})
+.then((e) => console.log("update chat response========= ", e))
 .catch((e) => console.log("update chat error========= ", e));
 
 }

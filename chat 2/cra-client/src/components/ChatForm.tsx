@@ -24,27 +24,23 @@ import {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(input);
-    
+    setSending(true)
     textBack(
       {
         variables:{input},
-        
-        // update: (store, { data }) => {
-        //   // you could wrap this in a try/catch
-        //   const chatData = store.readQuery<ChatsQuery>({
-        //     query: ChatsDocument
-        //   });
-        //   // console.log("chat cache========== ",chatData)
-        //  store.writeQuery<ChatsQuery>({
-        //     query: ChatsDocument,
-        //     data: {
-        //       chats: [...chatData!.chats, data!.createChat]
-        //     }
-        //   });
-        // }
-
-      }).then(e=>{
-        setSending(true)
+        update: (store, { data }) => {
+          // you could wrap this in a try/catch
+          const chatData = store.readQuery<ChatsQuery>({
+            query: ChatsDocument
+          });
+          // console.log("chat cache========== ",chatData)
+         store.writeQuery<ChatsQuery>({
+            query: ChatsDocument,
+            data: {
+              chats: [...chatData!.chats, data!.createChat]
+            }
+          });
+        }
       })
 
   };

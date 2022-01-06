@@ -10,36 +10,29 @@ import { useState } from 'react';
 function App() {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const {subscribeToMore ,...result} = useChatsQuery()
-// console.log("fetched result========= ",result.data)
-const[sending,setSending]=useState(true)
+console.log("fetched result========= ",result.data)
+const[sending,setSending]=useState(false)
 
 const subscribeToNewComments=() =>{
   subscribeToMore({
     document: NewChatDocument,
      updateQuery: (prev, { subscriptionData  }) => {
-      // console.log("the subscription data ===== ",subscriptionData,prev)
-      console.log("is this sending======  ",sending)
       if (!subscriptionData.data){
-        console.log("no subscription data ===== ",prev,subscriptionData)
+        console.log("no mergerd data ===== ",prev,subscriptionData)
         return prev
       }
-      // const { mutation, node } = subscriptionData.data.Message;
-      // if (mutation !== 'CREATED') return prev;
-    
-    //@ts-ignore
+      // const newFeedItem = subscriptionData.data.commentAdded;
+      //@ts-ignore
       const newFeedItem= subscriptionData.data.newChat;
-      console.log("new feed subscribed data ===== ",newFeedItem)
-      console.log("prev data in cache ===== ",prev)
-      setSending(false)
-
-    //   const newObj =Object.assign({}, prev, {
-    //   chats: [newFeedItem,...prev.chats]
-    //   });
-    // //  console.log("new object after merging ===== ",newObj)
-    //   return newObj
-    return{
+      console.log("new feed data ===== ",newFeedItem)
+      console.log("prev datad ===== ",prev)
+      const newObj =Object.assign({}, prev, {
+  
       chats: [newFeedItem,...prev.chats]
-    }
+      
+      });
+    //  console.log("new object after merging ===== ",newObj)
+      return newObj
 
     } })
 }
