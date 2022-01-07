@@ -1,6 +1,0 @@
-fragment RegularChat on Chat{
-    _id
-    message,
-    createdAt,
-    updatedAt
-}

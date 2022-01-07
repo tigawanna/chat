@@ -1,5 +1,0 @@
-mutation UpdateChat($input: String!, $id: String!) {
-  updateChat(input: $input, id: $id) {
-   ...RegularChat
-  }
-}
